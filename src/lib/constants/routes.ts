@@ -1,0 +1,33 @@
+export const ROUTES = {
+  HOME: "/",
+  FEED: "/feed",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
+  ONBOARDING: "/onboarding",
+  ONBOARDING_FOLLOW: "/onboarding/follow",
+  SEARCH: "/search",
+  BOOKMARKS: "/bookmarks",
+  NOTIFICATIONS: "/notifications",
+  STATS: "/stats",
+  UPGRADE: "/upgrade",
+  REDEEM: "/redeem",
+  INVITE: "/invite",
+  HELP_ME_PICK: "/help-me-pick",
+
+  RECIPE: (id: string) => `/recipe/${id}`,
+  RECIPE_COOK: (id: string) => `/recipe/${id}/cook`,
+  RECIPE_EDIT: (id: string) => `/recipe/${id}/edit`,
+  RECIPE_NEW: "/recipe/new",
+
+  PROFILE: (username: string) => `/profile/${username}`,
+  PROFILE_FOLLOWERS: (username: string) => `/profile/${username}/followers`,
+  PROFILE_FOLLOWING: (username: string) => `/profile/${username}/following`,
+
+  SETTINGS: "/settings",
+  SETTINGS_ACCOUNT: "/settings",
+  SETTINGS_NOTIFICATIONS: "/settings/notifications",
+  SETTINGS_BLOCKED: "/settings/blocked",
+  SETTINGS_SUBSCRIPTION: "/settings/subscription",
+} as const;

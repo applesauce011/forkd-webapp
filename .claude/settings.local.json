@@ -2,7 +2,24 @@
   "permissions": {
     "allow": [
       "Bash(npx create-next-app@latest . --typescript --tailwind --app --src-dir --import-alias \"@/*\" --no-eslint --yes)",
-      "Bash(npx shadcn@latest init --yes --defaults)"
+      "Bash(npx shadcn@latest init --yes --defaults)",
+      "Bash(npx shadcn@latest add input textarea dialog sheet tabs badge avatar card dropdown-menu skeleton scroll-area select checkbox switch slider progress separator tooltip popover label alert --yes)",
+      "Bash(npx supabase:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \"const z = require\\('C:/forkd-webapp/node_modules/zod'\\); const s = z.number\\(\\).min\\(0\\).nullable\\(\\).optional\\(\\); console.log\\(typeof s, Object.keys\\(s\\).slice\\(0,5\\)\\);\")",
+      "Bash(node -e ':*)",
+      "Bash(node -e \"const r = require\\('C:/forkd-webapp/node_modules/@hookform/resolvers/zod/dist/zod.js'\\); console.log\\(typeof r.zodResolver\\);\")",
+      "Bash(wc -l C:/forkd-webapp/src/components/recipe/cook-mode/*.tsx C:/forkd-webapp/src/app/\\\\\\(main\\\\\\)/recipe/\\\\[id\\\\]/cook/page.tsx)",
+      "Bash(npx next:*)",
+      "Bash(awk 'NR>2545' C:/forkd-webapp/src/types/database.ts)",
+      "Bash(sed -i \"s/'Invite Friends — Forkd'/'Invite Friends — Fork\\\\\\\\'d'/g\" src/app/\\\\\\(main\\\\\\)/invite/page.tsx)",
+      "Bash(sed -i \"s/Forkd\\\\`/Fork'd\\\\`/g\" src/app/\\\\\\(main\\\\\\)/recipe/\\\\[id\\\\]/cook/page.tsx)",
+      "Bash(sed -i \"s/'Edit Recipe — Forkd'/'Edit Recipe — Fork\\\\\\\\'d'/g\" src/app/\\\\\\(main\\\\\\)/recipe/\\\\[id\\\\]/edit/page.tsx)",
+      "Bash(sed -i \"s/'Redeem a Code — Forkd'/'Redeem a Code — Fork\\\\\\\\'d'/g\" src/app/\\\\\\(main\\\\\\)/redeem/page.tsx)",
+      "Bash(sed -i \"s/Manage your Forkd plan/Manage your Fork'd plan/g\" src/app/\\\\\\(main\\\\\\)/settings/subscription/page.tsx)",
+      "Bash(find C:/forkd-webapp/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec grep -l \"stripe\\\\|@stripe\" {} \\\\;)"
     ]
   }
 }
