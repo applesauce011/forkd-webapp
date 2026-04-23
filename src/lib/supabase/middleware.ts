@@ -18,9 +18,12 @@ export async function updateSession(request: NextRequest) {
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
+          cookiesToSet.forEach(({ name, value, options }) => {
+            // Strip maxAge/expires so auth cookies are session-only
+            // (cleared when browser closes, preventing stale auto-login)
+            const { maxAge, expires, ...sessionOptions } = options ?? {};
+            supabaseResponse.cookies.set(name, value, sessionOptions);
+          });
         },
       },
     }

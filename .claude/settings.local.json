@@ -19,7 +19,8 @@
       "Bash(sed -i \"s/'Edit Recipe — Forkd'/'Edit Recipe — Fork\\\\\\\\'d'/g\" src/app/\\\\\\(main\\\\\\)/recipe/\\\\[id\\\\]/edit/page.tsx)",
       "Bash(sed -i \"s/'Redeem a Code — Forkd'/'Redeem a Code — Fork\\\\\\\\'d'/g\" src/app/\\\\\\(main\\\\\\)/redeem/page.tsx)",
       "Bash(sed -i \"s/Manage your Forkd plan/Manage your Fork'd plan/g\" src/app/\\\\\\(main\\\\\\)/settings/subscription/page.tsx)",
-      "Bash(find C:/forkd-webapp/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec grep -l \"stripe\\\\|@stripe\" {} \\\\;)"
+      "Bash(find C:/forkd-webapp/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec grep -l \"stripe\\\\|@stripe\" {} \\\\;)",
+      "Bash(xargs grep *)"
     ]
   }
 }
