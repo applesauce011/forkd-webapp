@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props) {
 
   return {
     title: recipe ? `Cook: ${recipe.title} — Fork'd` : "Cook Mode — Fork'd",
+    robots: { index: false, follow: false },
   };
 }
 

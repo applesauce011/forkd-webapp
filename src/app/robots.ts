@@ -16,6 +16,8 @@ export default function robots(): MetadataRoute.Robots {
           "/upgrade",
           "/invite",
           "/redeem",
+          "/recipe/*/cook",
+          "/recipe/*/edit",
         ],
       },
     ],
