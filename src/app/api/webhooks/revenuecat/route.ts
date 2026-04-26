@@ -16,14 +16,19 @@ export async function POST(req: NextRequest) {
   const isActive = ACTIVE_EVENTS.has(event.type)
   const supabase = await createServiceClient()
 
-  await supabase
-    .from('user_entitlements')
-    .upsert({ user_id: userId, is_premium: isActive }, { onConflict: 'user_id' })
+  try {
+    await supabase
+      .from('user_entitlements')
+      .upsert({ user_id: userId, is_premium: isActive }, { onConflict: 'user_id' })
 
-  await supabase
-    .from('profiles')
-    .update({ is_premium: isActive })
-    .eq('id', userId)
+    await supabase
+      .from('profiles')
+      .update({ is_premium: isActive })
+      .eq('id', userId)
+  } catch (err) {
+    console.error('RevenueCat webhook handler error:', err)
+    return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 })
+  }
 
   return NextResponse.json({ received: true })
 }

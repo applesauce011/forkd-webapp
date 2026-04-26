@@ -10,9 +10,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+  useEffect(() => {}, [error]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center px-4">

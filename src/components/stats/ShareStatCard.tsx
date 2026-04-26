@@ -50,7 +50,7 @@ export function ShareStatCard({ stats, profile }: ShareStatCardProps) {
       }
     } catch (err) {
       // User cancelled or share failed — silently ignore
-      console.warn("Share failed:", err);
+      if (process.env.NODE_ENV === 'development') console.warn("Share failed:", err);
     } finally {
       setExporting(false);
     }

@@ -27,7 +27,7 @@ export function CheckoutButton({
         window.location.href = url
       }
     } catch (err) {
-      console.error('Checkout error:', err)
+      if (process.env.NODE_ENV === 'development') console.error('Checkout error:', err)
       setLoading(false)
     }
     // Don't reset loading if redirecting — page will navigate away

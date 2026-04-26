@@ -148,7 +148,7 @@ export function FeedList({ type, userId, columns = 1 }: FeedListProps) {
       setRecipes((prev) => (pageNum === 0 ? items : [...prev, ...items]));
       setHasMore(items.length === PAGE_SIZE);
     } catch (err) {
-      console.error("Feed load error:", err);
+      if (process.env.NODE_ENV === 'development') console.error("Feed load error:", err);
     } finally {
       setLoading(false);
     }

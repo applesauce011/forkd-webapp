@@ -33,7 +33,7 @@ export default async function HomePage() {
 
   const recipeCount = countRes.count ?? 0;
 
-  const carouselRecipes: CarouselRecipe[] = (recipesRes.data ?? []).map((r) => {
+  const carouselRecipes: CarouselRecipe[] = (recipesRes.data ?? []).filter((r): r is typeof r & { id: string } => r.id !== null).map((r) => {
     const photos = Array.isArray(r.recipe_photos)
       ? r.recipe_photos
       : r.recipe_photos
