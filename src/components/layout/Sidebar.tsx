@@ -12,8 +12,8 @@ import { useSession } from "@/hooks/useSession";
 import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
-  { href: ROUTES.FEED, icon: Home, label: "Feed" },
-  { href: ROUTES.SEARCH, icon: Search, label: "Search" },
+  { href: ROUTES.FEED, icon: Home, label: "Feed", allowGuest: true },
+  { href: ROUTES.SEARCH, icon: Search, label: "Search", allowGuest: true },
   { href: ROUTES.RECIPE_NEW, icon: PlusCircle, label: "New Recipe", primary: true },
   { href: ROUTES.BOOKMARKS, icon: Bookmark, label: "Bookmarks" },
   { href: ROUTES.STATS, icon: BarChart2, label: "Creator Stats" },
@@ -31,12 +31,12 @@ export function Sidebar({ username }: SidebarProps) {
   return (
     <aside className="hidden md:flex flex-col w-56 shrink-0 border-r h-[calc(100vh-3.5rem)] sticky top-14 py-4 px-3">
       <nav className="flex-1 space-y-1">
-        {NAV_ITEMS.map(({ href, icon: Icon, label, primary }) => {
+        {NAV_ITEMS.map(({ href, icon: Icon, label, primary, allowGuest }) => {
           const active = pathname === href || ((href as string) !== "/" && pathname.startsWith(href));
           return (
             <Link
               key={href}
-              href={user ? href : "/login"}
+              href={user || allowGuest ? href : "/login"}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 active

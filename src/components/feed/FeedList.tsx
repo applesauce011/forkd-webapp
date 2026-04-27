@@ -25,9 +25,10 @@ interface FeedListProps {
   type: "following" | "everyone" | "liked";
   userId?: string;
   columns?: 1 | 3;
+  sort?: "recent" | "trending";
 }
 
-export function FeedList({ type, userId, columns = 1 }: FeedListProps) {
+export function FeedList({ type, userId, columns = 1, sort = "recent" }: FeedListProps) {
   const { supabase } = useSupabaseContext();
   const entitlements = useEntitlements();
   const [recipes, setRecipes] = useState<RecipeWithAuthor[]>([]);
@@ -89,16 +90,19 @@ export function FeedList({ type, userId, columns = 1 }: FeedListProps) {
           .select(FEED_SELECT)
           .in("id", ids);
       } else {
-        // Everyone — most recent
         query = supabase
           .from("recipes_visible")
           .select(FEED_SELECT)
           .eq("visibility", "public")
-          .order("created_at", { ascending: false })
           .range(from, to);
 
-        if (cursorTimestamp && pageNum > 0) {
-          query = query.lte("created_at", cursorTimestamp);
+        if (sort === "trending") {
+          query = query.order("likes_count", { ascending: false });
+        } else {
+          query = query.order("created_at", { ascending: false });
+          if (cursorTimestamp && pageNum > 0) {
+            query = query.lte("created_at", cursorTimestamp);
+          }
         }
       }
 
@@ -152,11 +156,15 @@ export function FeedList({ type, userId, columns = 1 }: FeedListProps) {
     } finally {
       setLoading(false);
     }
-  }, [supabase, type, userId, cursorTimestamp, hasMore]);
+  }, [supabase, type, userId, sort, cursorTimestamp, hasMore]);
 
   useEffect(() => {
+    setRecipes([]);
+    setPage(0);
+    setHasMore(true);
+    setCursorTimestamp(null);
     loadRecipes(0);
-  }, [type, userId]); // eslint-disable-line
+  }, [type, userId, sort]); // eslint-disable-line
 
   const loadMore = useCallback(() => {
     const nextPage = page + 1;

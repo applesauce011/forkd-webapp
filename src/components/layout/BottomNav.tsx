@@ -8,8 +8,8 @@ import { ROUTES } from "@/lib/constants/routes";
 import { useSession } from "@/hooks/useSession";
 
 const NAV_ITEMS = [
-  { href: ROUTES.FEED, icon: Home, label: "Feed" },
-  { href: ROUTES.SEARCH, icon: Search, label: "Search" },
+  { href: ROUTES.FEED, icon: Home, label: "Feed", allowGuest: true },
+  { href: ROUTES.SEARCH, icon: Search, label: "Search", allowGuest: true },
   { href: ROUTES.RECIPE_NEW, icon: PlusCircle, label: "Add", primary: true },
   { href: ROUTES.BOOKMARKS, icon: Bookmark, label: "Saves" },
 ];
@@ -25,12 +25,12 @@ export function BottomNav({ username }: BottomNavProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 border-t bg-background/80 backdrop-blur-sm md:hidden">
       <div className="flex items-stretch h-16">
-        {NAV_ITEMS.map(({ href, icon: Icon, label, primary }) => {
+        {NAV_ITEMS.map(({ href, icon: Icon, label, primary, allowGuest }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
               key={href}
-              href={user ? href : "/login"}
+              href={user || allowGuest ? href : "/login"}
               className={cn(
                 "flex-1 flex flex-col items-center justify-center gap-0.5 text-xs transition-colors",
                 primary

@@ -37,5 +37,5 @@ async function FeedContent({ defaultTab }: { defaultTab?: string }) {
     resolvedTab = follows && follows.length > 0 ? "following" : "everyone";
   }
 
-  return <FeedTabs userId={user?.id} defaultTab={resolvedTab} />;
+  return <FeedTabs userId={user?.id} defaultTab={resolvedTab} isAuthenticated={!!user} />;
 }
