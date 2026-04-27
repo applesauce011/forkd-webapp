@@ -1,6 +1,6 @@
 'use client'
 
-import { Lock, Crown } from 'lucide-react'
+import { Lock, Crown, UserPlus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
@@ -14,14 +14,15 @@ import {
 } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useEntitlements } from '@/hooks/useEntitlements'
+import { useSession } from '@/hooks/useSession'
+import Link from 'next/link'
+import { ROUTES } from '@/lib/constants/routes'
 import {
   CUISINE_TAGS,
   DIETARY_TAGS,
   ALLERGEN_TAGS,
   MEAL_TYPE_TAGS,
 } from '@/lib/constants/tags'
-import { ROUTES } from '@/lib/constants/routes'
-import Link from 'next/link'
 import type { SearchFilters } from '@/components/search/SearchPageClient'
 
 interface AdvancedFiltersProps {
@@ -76,6 +77,28 @@ function MultiCheckboxGroup({
 }
 
 function PremiumGate() {
+  const { user } = useSession()
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-4">
+        <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center">
+          <UserPlus className="h-6 w-6 text-muted-foreground" />
+        </div>
+        <div>
+          <h3 className="font-semibold text-base">Create an account</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Sign up for free to filter by cuisine, dietary needs, allergens, meal type, difficulty,
+            and cook time.
+          </p>
+        </div>
+        <Button asChild>
+          <Link href={ROUTES.SIGNUP}>Create free account</Link>
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-4">
       <div className="h-14 w-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">

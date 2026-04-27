@@ -222,7 +222,7 @@ export function SearchResults({
       // Try full-text search first, fall back to ilike on error
       let { data, count, error } = await buildRecipeQuery(true)
 
-      if (error) {
+      if (error || !data?.length) {
         ;({ data, count, error } = await buildRecipeQuery(false))
       }
 

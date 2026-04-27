@@ -9,6 +9,7 @@ import {
 import { cn } from "@/lib/utils/cn";
 import { ROUTES } from "@/lib/constants/routes";
 import { useSession } from "@/hooks/useSession";
+import { useEntitlements } from "@/hooks/useEntitlements";
 import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
@@ -27,6 +28,7 @@ interface SidebarProps {
 export function Sidebar({ username }: SidebarProps) {
   const pathname = usePathname();
   const { user } = useSession();
+  const entitlements = useEntitlements();
 
   return (
     <aside className="hidden md:flex flex-col w-56 shrink-0 border-r h-[calc(100vh-3.5rem)] sticky top-14 py-4 px-3">
@@ -65,12 +67,13 @@ export function Sidebar({ username }: SidebarProps) {
           </Link>
         )}
       </nav>
-      {user && (
-        <div className="mt-auto">
+      {user && !entitlements.is_premium && (
+        <div className="mt-auto space-y-1.5">
+          <p className="text-xs text-muted-foreground text-center px-2">Loving Fork&apos;d?</p>
           <Button asChild size="sm" className="w-full" variant="outline">
             <Link href={ROUTES.UPGRADE}>
               <Zap className="h-4 w-4 mr-2 text-amber-500" />
-              Upgrade to Premium
+              Go Premium
             </Link>
           </Button>
         </div>

@@ -35,7 +35,7 @@ export async function logIn(formData: { email: string; password: string }) {
     return { error: error.message };
   }
 
-  redirect("/feed");
+  return { success: true };
 }
 
 export async function logOut() {

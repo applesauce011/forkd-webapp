@@ -46,7 +46,7 @@ export function FollowSuggestions({ userId, suggestions }: FollowSuggestionsProp
   }
 
   async function handleContinue() {
-    router.push("/feed");
+    router.push("/onboarding/premium");
   }
 
   return (

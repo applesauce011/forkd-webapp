@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { Trash2, Save, Clock, Crown, Lock } from 'lucide-react'
+import { Trash2, Save, Clock, Crown, Lock, UserPlus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,6 +10,7 @@ import { ROUTES } from '@/lib/constants/routes'
 import Link from 'next/link'
 import type { SearchFilters } from '@/components/search/SearchPageClient'
 import { formatDate } from '@/lib/utils/format'
+import { useSession } from '@/hooks/useSession'
 
 const STORAGE_KEY = 'forkd_saved_searches'
 
@@ -56,6 +57,27 @@ function buildFilterSummary(query: string, filters: SearchFilters): string {
 }
 
 function PremiumGate() {
+  const { user } = useSession()
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-4">
+        <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center">
+          <UserPlus className="h-6 w-6 text-muted-foreground" />
+        </div>
+        <div>
+          <h3 className="font-semibold text-base">Create an account</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Sign up for free to save your favourite searches and filter combinations.
+          </p>
+        </div>
+        <Button asChild>
+          <Link href={ROUTES.SIGNUP}>Create free account</Link>
+        </Button>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center space-y-4">
       <div className="h-14 w-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">

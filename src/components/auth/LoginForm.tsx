@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,6 +24,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export function LoginForm() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -57,8 +59,11 @@ export function LoginForm() {
         : result.error
       );
       setLoading(false);
+      return;
     }
-    // on success, logIn server action does redirect() so we don't need to handle it
+    // Refresh server components so the new session cookie is picked up, then navigate
+    router.refresh();
+    router.push("/feed");
   }
 
   return (
