@@ -12,8 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { logIn } from "@/actions/auth";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { logIn, initiateAppleSignIn } from "@/actions/auth";
 
 const REMEMBER_EMAIL_KEY = "forkd_remember_email";
 
@@ -32,17 +31,13 @@ export function LoginForm() {
 
   async function handleAppleSignIn() {
     setAppleLoading(true);
-    const supabase = getSupabaseBrowserClient();
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "apple",
-      options: {
-        redirectTo: `${window.location.origin}/api/auth/callback`,
-      },
-    });
-    if (error) {
+    const result = await initiateAppleSignIn();
+    if ("error" in result || !result.url) {
       toast.error("Could not sign in with Apple. Please try again.");
       setAppleLoading(false);
+      return;
     }
+    window.location.href = result.url;
   }
 
   const {

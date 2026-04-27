@@ -75,3 +75,21 @@ export async function updatePassword(password: string) {
 
   redirect("/feed");
 }
+
+export async function initiateAppleSignIn() {
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin") ?? "https://forkd.io";
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "apple",
+    options: {
+      redirectTo: `${origin}/api/auth/callback`,
+    },
+  });
+
+  if (error || !data.url) {
+    return { error: error?.message ?? "Failed to initiate Apple sign in" };
+  }
+
+  return { url: data.url };
+}
