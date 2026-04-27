@@ -8,9 +8,6 @@ export async function claimProfile(formData: {
   display_name: string;
   username: string;
   bio?: string;
-  avatar_source: "placeholder" | "custom";
-  avatar_placeholder_key?: string;
-  avatar_custom_path?: string;
 }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -26,24 +23,20 @@ export async function claimProfile(formData: {
     return { error: rpcError.message };
   }
 
-  // Update additional fields
-  const updateData: {
-    bio?: string;
-    avatar_source?: "placeholder" | "custom";
-    avatar_placeholder_key?: string;
-    avatar_custom_path?: string;
-  } = {
-    bio: formData.bio || undefined,
-    avatar_source: formData.avatar_source,
-  };
-  if (formData.avatar_source === "placeholder" && formData.avatar_placeholder_key) {
-    updateData.avatar_placeholder_key = formData.avatar_placeholder_key;
-  }
-  if (formData.avatar_source === "custom" && formData.avatar_custom_path) {
-    updateData.avatar_custom_path = formData.avatar_custom_path;
-  }
+  // Auto-assign a random placeholder avatar
+  const { data: placeholders } = await supabase
+    .from("avatar_placeholders")
+    .select("path");
 
-  await supabase.from("profiles").update(updateData).eq("id", user.id);
+  const avatarKey = placeholders && placeholders.length > 0
+    ? placeholders[Math.floor(Math.random() * placeholders.length)].path
+    : null;
+
+  await supabase.from("profiles").update({
+    bio: formData.bio || undefined,
+    avatar_source: "placeholder",
+    ...(avatarKey ? { avatar_placeholder_key: avatarKey } : {}),
+  }).eq("id", user.id);
 
   redirect("/onboarding/follow");
 }

@@ -45,7 +45,7 @@ export function PremiumUpsell() {
         <CheckoutButton className="w-full bg-orange-500 hover:bg-orange-600 text-white">
           Start Premium
         </CheckoutButton>
-        <Button variant="ghost" className="w-full" onClick={() => router.push('/feed')}>
+        <Button variant="ghost" className="w-full" onClick={() => { window.location.href = '/feed' }}>
           Continue for free →
         </Button>
         <p className="text-xs text-muted-foreground">

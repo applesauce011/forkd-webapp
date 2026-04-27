@@ -8,7 +8,7 @@ export async function signUp(formData: { email: string; password: string }) {
   const supabase = await createClient();
   const origin = (await headers()).get("origin") ?? "https://forkd.io";
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: formData.email,
     password: formData.password,
     options: {
@@ -18,6 +18,11 @@ export async function signUp(formData: { email: string; password: string }) {
 
   if (error) {
     return { error: error.message };
+  }
+
+  // When Supabase email confirmation is disabled, a session is returned immediately
+  if (data.session) {
+    redirect("/onboarding");
   }
 
   return { success: true, message: "Check your email to confirm your account." };

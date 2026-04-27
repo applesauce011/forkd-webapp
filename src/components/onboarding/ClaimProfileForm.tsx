@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AvatarPicker } from "@/components/onboarding/AvatarPicker";
 import { claimProfile } from "@/actions/profile";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -26,22 +25,13 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-interface Placeholder {
-  id: number;
-  path: string;
-}
-
 interface ClaimProfileFormProps {
   userId: string;
-  placeholders: Placeholder[];
 }
 
-export function ClaimProfileForm({ userId, placeholders }: ClaimProfileFormProps) {
+export function ClaimProfileForm({ userId }: ClaimProfileFormProps) {
   const supabase = getSupabaseBrowserClient();
   const [loading, setLoading] = useState(false);
-  const [avatarSource, setAvatarSource] = useState<"placeholder" | "custom">("placeholder");
-  const [selectedPlaceholder, setSelectedPlaceholder] = useState<string>(placeholders[0]?.path ?? "");
-  const [customAvatarPath, setCustomAvatarPath] = useState<string>("");
   const [usernameStatus, setUsernameStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
 
   const {
@@ -53,7 +43,6 @@ export function ClaimProfileForm({ userId, placeholders }: ClaimProfileFormProps
 
   const username = watch("username");
 
-  // Debounced username availability check
   const checkUsername = useCallback(
     async (val: string) => {
       if (!val || val.length < 3) return;
@@ -80,9 +69,6 @@ export function ClaimProfileForm({ userId, placeholders }: ClaimProfileFormProps
       display_name: data.display_name,
       username: data.username,
       bio: data.bio,
-      avatar_source: avatarSource,
-      avatar_placeholder_key: avatarSource === "placeholder" ? selectedPlaceholder : undefined,
-      avatar_custom_path: avatarSource === "custom" ? customAvatarPath : undefined,
     });
     if (result?.error) {
       toast.error(result.error);
@@ -91,19 +77,11 @@ export function ClaimProfileForm({ userId, placeholders }: ClaimProfileFormProps
     // On success, claimProfile redirects to /onboarding/follow
   }
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white/90 dark:bg-stone-900/90 rounded-2xl p-6 shadow-lg border-0">
-      {/* Avatar */}
-      <AvatarPicker
-        userId={userId}
-        placeholders={placeholders}
-        avatarSource={avatarSource}
-        onSourceChange={setAvatarSource}
-        selectedPlaceholder={selectedPlaceholder}
-        onPlaceholderSelect={setSelectedPlaceholder}
-        onCustomUpload={setCustomAvatarPath}
-      />
+  // Suppress unused variable warning — userId kept for potential future use
+  void userId;
 
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-card rounded-2xl p-6 shadow-sm border">
       {/* Display Name */}
       <div className="space-y-2">
         <Label htmlFor="display_name">Display Name</Label>

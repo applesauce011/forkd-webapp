@@ -22,6 +22,8 @@ export async function GET(request: Request) {
         if (!profile?.username) {
           return NextResponse.redirect(`${origin}/onboarding`);
         }
+        // Returning user with a profile — send straight to feed
+        return NextResponse.redirect(`${origin}/feed`);
       }
       return NextResponse.redirect(`${origin}${next}`);
     }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Loader2Icon } from 'lucide-react'
 
@@ -28,6 +29,7 @@ export function CheckoutButton({
       }
     } catch (err) {
       if (process.env.NODE_ENV === 'development') console.error('Checkout error:', err)
+      toast.error('Something went wrong starting checkout. Please try again.')
       setLoading(false)
     }
     // Don't reset loading if redirecting — page will navigate away

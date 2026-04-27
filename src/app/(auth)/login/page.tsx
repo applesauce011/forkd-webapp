@@ -21,10 +21,7 @@ export default function LoginPage() {
           </Link>
         </p>
         <p className="text-center text-xs text-muted-foreground border-t pt-3">
-          Signed up with Apple?{" "}
-          <Link href="/forgot-password" className="text-primary hover:underline">
-            Set a password here
-          </Link>
+          Signed up with Apple? Use the &ldquo;Sign in with Apple&rdquo; button above.
         </p>
       </CardContent>
     </Card>
