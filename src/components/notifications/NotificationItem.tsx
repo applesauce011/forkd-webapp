@@ -72,6 +72,7 @@ function NotificationText({
         </span>
       );
     case "recipe_cooked":
+    case "cooked_your_recipe":
       return (
         <span>
           <strong className="font-medium">{actorName}</strong> cooked your
@@ -93,6 +94,7 @@ function NotificationText({
         </span>
       );
     case "follow_recipe":
+    case "new_from_followed":
       return (
         <span>
           Someone you follow posted{" "}
@@ -143,9 +145,11 @@ function getNotificationHref(notification: NotificationWithActor): string {
     case "recipe_comment":
     case "recipe_remix":
     case "recipe_cooked":
+    case "cooked_your_recipe":
     case "recipe_rating":
     case "recipe_reaction":
     case "follow_recipe":
+    case "new_from_followed":
       return notification.recipe_id
         ? ROUTES.RECIPE(notification.recipe_id)
         : ROUTES.NOTIFICATIONS;
