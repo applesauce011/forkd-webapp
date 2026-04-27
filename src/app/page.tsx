@@ -113,7 +113,7 @@ export default async function HomePage() {
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
           Fork&apos;d is where home cooks share what actually works in their kitchens.
-          No restaurants, no food bloggers — just real people, sharing recipes you can actually make.
+          Real people, real kitchens — recipes you can actually cook tonight.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Button asChild size="lg" className="text-base px-8">

@@ -107,13 +107,26 @@ function NotificationText({
       );
     case "system":
       return <span>{payload?.message ?? "System notification"}</span>;
-    default:
+    case "milestone_likes":
       return (
         <span>
-          <strong className="font-medium">{actorName}</strong> interacted with
-          your content
+          Your recipe <strong className="font-medium">{recipeTitle}</strong> hit
+          a new likes milestone!
         </span>
       );
+    case "milestone_cooked":
+      return (
+        <span>
+          Your recipe <strong className="font-medium">{recipeTitle}</strong> hit
+          a new cooked milestone!
+        </span>
+      );
+    case "weekly_digest":
+    case "re_engagement":
+    case "welcome":
+      return <span>{payload?.message ?? "You have a new notification"}</span>;
+    default:
+      return <span>You have a new notification</span>;
   }
 }
 
