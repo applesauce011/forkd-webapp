@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { SupabaseProvider } from "@/contexts/SupabaseContext";
 import "./globals.css";
+import { Analytics } from '@vercel/analytics/next';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,6 +90,8 @@ export default function RootLayout({
           </SupabaseProvider>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
+                <Analytics />
+
       </body>
     </html>
   );
