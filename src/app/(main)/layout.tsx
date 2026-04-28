@@ -5,6 +5,7 @@ import { TopBar } from "@/components/layout/TopBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Footer } from "@/components/layout/Footer";
+import { AuthLoadingGate } from "@/components/layout/AuthLoadingGate";
 import type { Entitlements } from "@/types/entitlements";
 
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
@@ -65,22 +66,24 @@ export default async function MainLayout({ children }: { children: React.ReactNo
     .eq("visibility", "public");
 
   return (
-    <EntitlementsProvider initialEntitlements={entitlements}>
-      <NotificationsProvider>
-        <div className="flex flex-col min-h-screen">
-          <TopBar profile={profile} />
-          <div className="flex flex-1">
-            <Sidebar username={profile?.username} />
-            <main className="flex-1 pb-20 md:pb-0 flex flex-col">
-              <div className="flex-1">
-                {children}
-              </div>
-              <Footer recipeCount={recipeCount ?? 0} />
-            </main>
+    <AuthLoadingGate>
+      <EntitlementsProvider initialEntitlements={entitlements}>
+        <NotificationsProvider>
+          <div className="flex flex-col min-h-screen">
+            <TopBar profile={profile} />
+            <div className="flex flex-1">
+              <Sidebar username={profile?.username} />
+              <main className="flex-1 pb-20 md:pb-0 flex flex-col">
+                <div className="flex-1">
+                  {children}
+                </div>
+                <Footer recipeCount={recipeCount ?? 0} />
+              </main>
+            </div>
+            <BottomNav username={profile?.username} />
           </div>
-          <BottomNav username={profile?.username} />
-        </div>
-      </NotificationsProvider>
-    </EntitlementsProvider>
+        </NotificationsProvider>
+      </EntitlementsProvider>
+    </AuthLoadingGate>
   );
 }

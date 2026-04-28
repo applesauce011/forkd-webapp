@@ -106,6 +106,30 @@ export default async function ProfilePage({ params }: Props) {
     following_count: 0,
   };
 
+  // Fetch avg rating for premium profiles
+  let profileAvgRating: number | null = null;
+  if (profile.is_premium) {
+    const { data: recipeIds } = await supabase
+      .from("recipes")
+      .select("id")
+      .eq("author_id", profile.id)
+      .eq("visibility", "public")
+      .is("deleted_at", null);
+
+    const ids = (recipeIds ?? []).map((r) => r.id);
+    if (ids.length > 0) {
+      const { data: ratingRows } = await supabase
+        .from("recipe_ratings")
+        .select("rating")
+        .in("recipe_id", ids);
+
+      if (ratingRows && ratingRows.length > 0) {
+        profileAvgRating =
+          ratingRows.reduce((s, r) => s + Number(r.rating), 0) / ratingRows.length;
+      }
+    }
+  }
+
   return (
     <PageWrapper className="max-w-2xl py-6">
       <ProfileHeader
@@ -113,6 +137,7 @@ export default async function ProfilePage({ params }: Props) {
         counters={safeCounters}
         isOwnProfile={isOwnProfile}
         initialIsFollowing={isFollowing}
+        avgRating={profileAvgRating}
       />
 
       {pinnedRecipe && <PinnedRecipe recipe={pinnedRecipe} />}

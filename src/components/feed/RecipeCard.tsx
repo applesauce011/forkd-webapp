@@ -4,6 +4,7 @@ import { ChefHat, Star } from "lucide-react";
 import { formatRelativeTime, formatCount } from "@/lib/utils/format";
 import { UserAvatar } from "@/components/shared/UserAvatar";
 import { RecipeBadge } from "@/components/shared/RecipeBadge";
+import { PremiumBadge } from "@/components/profile/PremiumBadge";
 import { ROUTES } from "@/lib/constants/routes";
 import { cn } from "@/lib/utils/cn";
 import type { RecipeWithAuthor } from "@/types/app";
@@ -113,6 +114,7 @@ export function RecipeCard({ recipe, className, compact = false }: RecipeCardPro
               {author.is_founding_cook && (
                 <span className="text-blue-500 text-xs" title="Founding Cook">✓</span>
               )}
+              {author.is_premium && <PremiumBadge />}
             </div>
             <span className="text-xs text-muted-foreground ml-auto">
               {formatRelativeTime(recipe.created_at)}

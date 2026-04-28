@@ -30,6 +30,7 @@ interface ProfileHeaderProps {
   counters: ProfileCounters;
   isOwnProfile: boolean;
   initialIsFollowing: boolean;
+  avgRating?: number | null;
 }
 
 export function ProfileHeader({
@@ -37,6 +38,7 @@ export function ProfileHeader({
   counters,
   isOwnProfile,
   initialIsFollowing,
+  avgRating,
 }: ProfileHeaderProps) {
   const router = useRouter();
   const { user } = useSupabaseContext();
@@ -167,7 +169,7 @@ export function ProfileHeader({
       )}
 
       {/* Stats */}
-      <ProfileStats counters={counters} />
+      <ProfileStats counters={counters} avgRating={avgRating} />
 
       {/* Modals */}
       {isOwnProfile && (

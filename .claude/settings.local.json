@@ -21,7 +21,8 @@
       "Bash(sed -i \"s/Manage your Forkd plan/Manage your Fork'd plan/g\" src/app/\\\\\\(main\\\\\\)/settings/subscription/page.tsx)",
       "Bash(find C:/forkd-webapp/src -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec grep -l \"stripe\\\\|@stripe\" {} \\\\;)",
       "Bash(xargs grep *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Read(//c/Users/nykmi/AppData/Local/Temp/claude/C--forkd-webapp/66f0057d-de38-49b8-990e-4660aa61f004/tasks/**)"
     ]
   }
 }

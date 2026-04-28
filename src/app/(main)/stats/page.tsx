@@ -7,7 +7,6 @@ import { RatingDistribution } from "@/components/stats/RatingDistribution";
 import { ActivityCalendar } from "@/components/stats/ActivityCalendar";
 import { StreakDisplay } from "@/components/stats/StreakDisplay";
 import { LeaderboardCard } from "@/components/stats/LeaderboardCard";
-import { ShareStatCard } from "@/components/stats/ShareStatCard";
 import { FeatureTable } from "@/components/premium/FeatureTable";
 import { Button } from "@/components/ui/button";
 import type { CreatorStatsFull, RatingDistributionEntry, ActivityEntry } from "@/components/stats/types";
@@ -114,7 +113,8 @@ export default async function StatsPage() {
   // Override broken RPC fields
   if (directCooks != null && directCooks > 0) stats.total_cooks = directCooks;
   if (ratingsRows && ratingsRows.length > 0) {
-    stats.avg_rating = ratingsRows.reduce((s, r) => s + r.rating, 0) / ratingsRows.length;
+    // Use Number() to guard against Postgres numeric columns arriving as strings
+    stats.avg_rating = ratingsRows.reduce((s, r) => s + Number(r.rating), 0) / ratingsRows.length;
     stats.total_ratings = ratingsRows.length;
   }
 
@@ -142,14 +142,6 @@ export default async function StatsPage() {
       ? stats.activity_by_day
       : computedActivity;
 
-  const shareProfile = {
-    display_name: profile?.display_name ?? null,
-    username: profile?.username ?? null,
-    avatar_source: profile?.avatar_source ?? null,
-    avatar_placeholder_key: profile?.avatar_placeholder_key ?? null,
-    avatar_custom_path: profile?.avatar_custom_path ?? null,
-  };
-
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -176,11 +168,6 @@ export default async function StatsPage() {
         <RatingDistribution data={effectiveRatingDist} />
       ) : null}
 
-      {/* Share card */}
-      <div>
-        <h2 className="text-base font-semibold mb-3">Share your stats</h2>
-        <ShareStatCard stats={stats} profile={shareProfile} percentile={percentile} />
-      </div>
     </div>
   );
 }

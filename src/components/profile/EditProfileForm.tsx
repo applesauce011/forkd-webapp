@@ -66,6 +66,20 @@ export function EditProfileForm({ open, onClose, profile }: EditProfileFormProps
         </SheetHeader>
 
         <div className="space-y-5">
+          {/* Profile picture note */}
+          <div className="rounded-lg bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
+            To change your profile picture, use the{" "}
+            <a
+              href="https://apps.apple.com/app/forkd/id6757679956"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-2"
+            >
+              Fork&apos;d iPhone app
+            </a>
+            .
+          </div>
+
           {/* Display name */}
           <div className="space-y-1.5">
             <Label htmlFor="display-name">Display Name</Label>
